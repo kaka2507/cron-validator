@@ -12,3 +12,4 @@ install:
   - pip install -r requirements/test.txt
 script:
   - pytest
+after_success: coveralls
