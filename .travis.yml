@@ -11,5 +11,5 @@ matrix:
 install:
   - pip install -r requirements/test.txt
 script:
-  - pytest
+  - py.test
 after_success: coveralls
