@@ -1,4 +1,7 @@
 # Cron Validator
+[![Build Status](https://travis-ci.org/vcoder4c/cron-validator.svg?branch=master)](https://travis-ci.org/vcoder4c/cron-validator)
+[![Coverage Status](https://coveralls.io/repos/github/vcoder4c/cron-validator/badge.svg?branch=master)](https://coveralls.io/github/vcoder4c/cron-validator?branch=master)
+
 ### **Features**
 - Validate unix cron expression
 - Match unit cron expression with specific datetime 
