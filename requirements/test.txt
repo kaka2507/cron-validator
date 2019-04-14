@@ -1,4 +1,4 @@
 -r base.txt
-pytest
+pytest>=3.6
 pytest-cov
 coveralls
