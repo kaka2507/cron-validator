@@ -172,3 +172,18 @@ def test_generate_execution_time_from_day_of_week_match():
         print(dt)
         dts.append(dt)
     assert len(dts) == 1
+
+
+def test_make_sure_dt_is_rounded():
+    from_str = '2019-04-23 12:00:01'
+    to_str = '2019-04-23 12:59:02'
+
+    print('--------------------------------------------------')
+    dts = list()
+    for dt in CronValidator.get_execution_time("* * * * *", from_dt=str_to_datetime(from_str),
+                                               to_dt=str_to_datetime(to_str)):
+        print(dt)
+        dts.append(dt)
+        assert dt.second == 0
+        assert dt.microsecond == 0
+    assert len(dts) == 60

@@ -72,4 +72,4 @@ class CronValidator(object):
         """
         for dt in rrule.rrule(rrule.MINUTELY, dtstart=from_dt, until=to_dt):
             if cls.match_datetime(expression, dt):
-                yield dt
+                yield dt.replace(second=0, microsecond=0)
