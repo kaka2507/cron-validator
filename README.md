@@ -7,6 +7,11 @@
 - Match unit cron expression with specific datetime 
 - Generate match datetime between two datetime
 
+### **Install**
+```shell script
+pip install cron-validator
+```
+
 ### Sample
 **1. Validate unix cron expression**
 ```python
