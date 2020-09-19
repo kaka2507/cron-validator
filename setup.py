@@ -11,7 +11,7 @@ else:
 setup(
     name='cron-validator',
     packages=['cron_validator'],
-    version='1.0.1',
+    version='1.0.2',
     license='MIT',
     description='Unix cron implementation by Python',
     long_description=long_description,
@@ -19,8 +19,8 @@ setup(
     author='vcoder',
     author_email='doanngocbao@gmail.com',
     url='https://github.com/vcoder4c/cron-validator',
-    keywords=['cron', 'python', 'cron expression validator', 'cron expression iterator'],
-    download_url='https://github.com/vcoder4c/cron-validator/archive/v1.0.1.tar.gz',
+    keywords=['cron', 'python', 'cron expression validator', 'cron expression iterator', 'cron scheduler'],
+    download_url='https://github.com/vcoder4c/cron-validator/archive/v1.0.2.tar.gz',
     install_requires=[
         'python_dateutil',
         'pytz'
