@@ -44,8 +44,6 @@ def test_time_for_execution_minutely():
             frozen_datetime.tick(1)
 
 
-@pytest.mark.skip("It seems like CronValidator has a bug when dealing with complicated cron jobs. Till that bug is fixed,"
-                  " this test is skipped since this class relies on the functionality of CronValidator.")
 def test_time_for_execution_complicated_cron():
     # More complicated scheduling: At every 5th minute past every hour from 1 through 6 on every day-of-week from
     # Tuesday through Thursday in March.

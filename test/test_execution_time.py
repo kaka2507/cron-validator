@@ -163,7 +163,7 @@ def test_generate_execution_time_from_day_of_week_match():
                                                to_dt=str_to_datetime(to_str)):
         print(dt)
         dts.append(dt)
-    assert len(dts) == 1
+    assert len(dts) == 0
 
     print('--------------------------------------------------')
     dts = list()
