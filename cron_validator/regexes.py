@@ -89,7 +89,7 @@ class Element(object):
         attribute = maps.get(self.part)
         if attribute:
             return dt.__getattribute__(attribute)
-        return dt.weekday()
+        return self._convert_weekday(dt.weekday())
 
     def match(self, dt):
         """
@@ -98,6 +98,26 @@ class Element(object):
         :return:
         """
         raise NotImplementedError()
+
+    @staticmethod
+    def _convert_weekday(weekday):
+        """ converts the weekday from starting from a week starting from Monday to a week starting from Sunday
+
+        For the official crontab documentation (https://man7.org/linux/man-pages/man5/crontab.5.html (2020-09-20)) it
+        can be seen that their week starts on Sunday, which means SUN = 0, MON = 1, ..., SAT = 6. However, for the
+        package dateutil, which performs the actual scheduling, the week starts on a Monday, which means MON = 1,
+        TUE = 2, ..., SUN = 6. Since this package shall imitate the real cron syntax to avoid further confusion, the
+        weekday is converted to a week where SUN = 0. Nb. the official cron documentation states that 7 shall also be a
+        valid input and be corresponding to SUN leading to a week where MON = 1, TUE = 2, ..., SUN = 7. This method
+        respects that, however the regex only allows the maximal input of 6.
+        :param weekday: integer representing weekday, assuming MON = 1, TUE = 2, ..., SUN = 6
+        :return: integer representing passed weekday, however the week starts on Sunday meaning SUN = 0, MON = 1, ...
+        """
+        if weekday <= 5:
+            weekday_week_starting_sunday = weekday + 1
+        else:
+            weekday_week_starting_sunday = 0
+        return weekday_week_starting_sunday
 
 
 class MatchAllElement(Element):
