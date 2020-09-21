@@ -1,5 +1,5 @@
 import sys
-from distutils.core import setup
+from setuptools import setup
 
 if sys.version_info[0] < 3:
     with open('README.md') as f:

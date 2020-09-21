@@ -1,2 +1,4 @@
 -r base.txt
 twine
+wheel
+setuptools
