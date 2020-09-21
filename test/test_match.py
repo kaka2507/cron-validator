@@ -66,16 +66,16 @@ def test_match_month():
 
 
 def test_match_day_of_week():
-    dt_str = '2019-04-23 1:00'
+    dt_str = '2019-04-23 1:00'  # Is a Tuesday
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)
-    assert CronValidator.match_datetime("* * * * 1", dt)
+    assert CronValidator.match_datetime("* * * * 2", dt)
     assert CronValidator.match_datetime("* * * * 5", dt) is False
-    assert CronValidator.match_datetime("* * * * 1-5", dt)
-    assert CronValidator.match_datetime("* * * * 1-3", dt)
-    assert CronValidator.match_datetime("* * * * 1/5", dt)
+    assert CronValidator.match_datetime("* * * * 2-5", dt)
+    assert CronValidator.match_datetime("* * * * 2-3", dt)
+    assert CronValidator.match_datetime("* * * * 2/5", dt)
     assert CronValidator.match_datetime("* * * * 5/1", dt) is False
     assert CronValidator.match_datetime("* * * * 1/1", dt)
-    assert CronValidator.match_datetime("* * * * 2,3,4", dt) is False
+    assert CronValidator.match_datetime("* * * * 3,4,5", dt) is False
     assert CronValidator.match_datetime("* * * * 2,3,1", dt)

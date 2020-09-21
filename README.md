@@ -6,10 +6,21 @@
 - Validate unix cron expression
 - Match unit cron expression with specific datetime 
 - Generate match datetime between two datetime
+- Schedule tasks
 
 ### **Install**
 ```shell script
 pip install cron-validator
+```
+
+### **Run Tests**
+**1. Install test requirements**
+```shell script
+pip install -r requirements/test.txt
+```
+**2. Run tests (with coverage if wished)**
+```shell script
+pytest --cov=. test/
 ```
 
 ### Sample
@@ -58,6 +69,20 @@ from_dt=str_to_datetime(from_str), to_dt=str_to_datetime(to_str)):
 # Output:
 # 2019-04-22 00:00:00+00:00
 # 2019-04-23 00:00:00+00:00
+```
+
+
+**4. Use scheduler for repetitive task**
+```python
+from cron_validator import CronScheduler
+
+cron_string = "*/1 * * * *"
+scheduler = CronScheduler(cron_string)
+
+while True:
+    if scheduler.time_for_execution():
+        # Get's called every full minute (excluding first iteration)
+        print("Now is the next scheduled time.")
 ```
 
 ### License
