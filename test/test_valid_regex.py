@@ -73,6 +73,7 @@ def test_validator_month_part():
     assert_validate_successfully("* * * * *")
     assert_validate_successfully("* * * */3 *")
     assert_validate_successfully("* * * 1-11 *")
+    assert_validate_successfully("* * * 1-12 *")
     assert_validate_successfully("* * * 1,3,5,7 *")
     assert_validate_successfully("* * * 12 *")
     assert_validate_fail("* * * 1,3,5,7-10 *")
@@ -84,6 +85,9 @@ def test_validator_month_part():
     assert_validate_successfully("* * * */1 *")
     assert_validate_successfully("* * * */11 *")
     assert_validate_fail("* * * */0 *")
+    assert_validate_fail("* * * 0 *")
+    assert_validate_fail("* * * 13 *")
+    assert_validate_fail("* * * 0-11 *")
     assert_validate_successfully("* * * */12 *")
 
 
