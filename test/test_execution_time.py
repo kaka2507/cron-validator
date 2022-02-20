@@ -1,5 +1,5 @@
-from cron_validator import CronValidator
 from cron_validator.util import str_to_datetime
+from cron_validator.validator import CronValidator
 
 
 def test_generate_execution_time_from_minute_match():

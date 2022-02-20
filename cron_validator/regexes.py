@@ -66,7 +66,7 @@ class ElementKind(Enum):
     GROUP_TYPE_STEP = 5
 
 
-class Element(object):
+class Element:
     kind = None
     max_value_map = {
         ElementPart.PART_MINUTE: 59,

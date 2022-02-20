@@ -4,7 +4,7 @@ from .regexes import ElementPart, element_kind_map, regex_list
 from .util import ts_to_datetime
 
 
-class CronValidator(object):
+class CronValidator:
     @classmethod
     def parse(cls, expression):
         """
@@ -19,7 +19,7 @@ class CronValidator(object):
         for i in range(0, 5):
             m = regex_list[i].fullmatch(parts[i])
             if not m:
-                raise ValueError("Invalid expression part {0}".format(i))
+                raise ValueError(f"Invalid expression part {i}")
             kind = None
             body = None
             for key, value in m.groupdict().items():
