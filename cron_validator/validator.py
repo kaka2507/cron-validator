@@ -15,7 +15,7 @@ class CronValidator(object):
         parts = expression.split(" ")
         if len(parts) != 5:
             raise ValueError("Invalid expression")
-        elements = list()
+        elements = []
         for i in range(0, 5):
             m = regex_list[i].fullmatch(parts[i])
             if not m:
