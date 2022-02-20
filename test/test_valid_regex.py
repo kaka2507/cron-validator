@@ -1,5 +1,6 @@
-from cron_validator import CronValidator
 import pytest
+
+from cron_validator import CronValidator
 
 
 def assert_validate_successfully(expr):

@@ -1,44 +1,53 @@
 import re
 from enum import Enum
 
-minute_re = re.compile("{0}|{1}|{2}|{3}|{4}".format("(?P<all>\\*)",
-                                                    "(?P<specific>[0-5]?\\d)",
-                                                    "(?P<range>[0-5]?\\d-[0-5]?\\d)",
-                                                    "(?P<list>[0-5]?\\d(,[0-5]?\\d)+)",
-                                                    "(?P<step>(\\*|[0-5]?\\d)/(([0-5]?[1-9])|([1-5]0)))"))
+minute_re = re.compile(
+    "{0}|{1}|{2}|{3}|{4}".format(
+        "(?P<all>\\*)",
+        "(?P<specific>[0-5]?\\d)",
+        "(?P<range>[0-5]?\\d-[0-5]?\\d)",
+        "(?P<list>[0-5]?\\d(,[0-5]?\\d)+)",
+        "(?P<step>(\\*|[0-5]?\\d)/(([0-5]?[1-9])|([1-5]0)))",
+    )
+)
 
-hour_re = re.compile("{0}|{1}|{2}|{3}|{4}".format("(?P<all>\\*)",
-                                                  "(?P<specific>[01]?\\d|2[0-3])",
-                                                  "(?P<range>([01]?\\d|2[0-3])-([01]?\\d|2[0-3]))",
-                                                  "(?P<list>([01]?\\d|2[0-3])(,([01]?\\d|2[0-3]))+)",
-                                                  "(?P<step>(\\*|[01]?\\d|2[0-3])/([01]?[1-9]|2[0-3]|10))"))
+hour_re = re.compile(
+    "{0}|{1}|{2}|{3}|{4}".format(
+        "(?P<all>\\*)",
+        "(?P<specific>[01]?\\d|2[0-3])",
+        "(?P<range>([01]?\\d|2[0-3])-([01]?\\d|2[0-3]))",
+        "(?P<list>([01]?\\d|2[0-3])(,([01]?\\d|2[0-3]))+)",
+        "(?P<step>(\\*|[01]?\\d|2[0-3])/([01]?[1-9]|2[0-3]|10))",
+    )
+)
 
-day_of_month_re = re.compile("{0}|{1}|{2}|{3}|{4}".
-                             format("(?P<all>\\*)",
-                                    "(?P<specific>[1-2]?[1-9]|[1-3]0|31)",
-                                    "(?P<range>([1-2]?[1-9]|[1-3]0|31)-([1-2]?[1-9]|[1-3]0|31))",
-                                    "(?P<list>([1-2]?[1-9]|[1-3]0|31)(,([1-2]?[1-9]|[1-3]0|31))+)",
-                                    "(?P<step>(\\*|[1-2]?[1-9]|[1-3]0|31)/([1-2]?[1-9]|[1-3]0|31))"))
+day_of_month_re = re.compile(
+    "{0}|{1}|{2}|{3}|{4}".format(
+        "(?P<all>\\*)",
+        "(?P<specific>[1-2]?[1-9]|[1-3]0|31)",
+        "(?P<range>([1-2]?[1-9]|[1-3]0|31)-([1-2]?[1-9]|[1-3]0|31))",
+        "(?P<list>([1-2]?[1-9]|[1-3]0|31)(,([1-2]?[1-9]|[1-3]0|31))+)",
+        "(?P<step>(\\*|[1-2]?[1-9]|[1-3]0|31)/([1-2]?[1-9]|[1-3]0|31))",
+    )
+)
 
-month_re = re.compile("{0}|{1}|{2}|{3}|{4}".format("(?P<all>\\*)",
-                                                   "(?P<specific>[1-9]|1[0-2])",
-                                                   "(?P<range>([1-9]|1[0-2])-([1-9]|1[0-2]))",
-                                                   "(?P<list>([1-9]|1[0-2])(,([1-9]|1[0-2]))+)",
-                                                   "(?P<step>(\\*|[1-9]|1[0-2])/([1-9]|1[0-2]))"))
+month_re = re.compile(
+    "{0}|{1}|{2}|{3}|{4}".format(
+        "(?P<all>\\*)",
+        "(?P<specific>[1-9]|1[0-2])",
+        "(?P<range>([1-9]|1[0-2])-([1-9]|1[0-2]))",
+        "(?P<list>([1-9]|1[0-2])(,([1-9]|1[0-2]))+)",
+        "(?P<step>(\\*|[1-9]|1[0-2])/([1-9]|1[0-2]))",
+    )
+)
 
-day_of_week_re = re.compile("{0}|{1}|{2}|{3}|{4}".format("(?P<all>\\*)",
-                                                         "(?P<specific>[0-6])",
-                                                         "(?P<range>[0-6]-[0-6])",
-                                                         "(?P<list>[0-6](,[0-6])+)",
-                                                         "(?P<step>(\\*|[0-6])/[1-6])"))
+day_of_week_re = re.compile(
+    "{0}|{1}|{2}|{3}|{4}".format(
+        "(?P<all>\\*)", "(?P<specific>[0-6])", "(?P<range>[0-6]-[0-6])", "(?P<list>[0-6](,[0-6])+)", "(?P<step>(\\*|[0-6])/[1-6])"
+    )
+)
 
-regex_list = [
-    minute_re,
-    hour_re,
-    day_of_month_re,
-    month_re,
-    day_of_week_re
-]
+regex_list = [minute_re, hour_re, day_of_month_re, month_re, day_of_week_re]
 
 
 class ElementPart(Enum):
@@ -64,7 +73,7 @@ class Element(object):
         ElementPart.PART_HOUR: 23,
         ElementPart.PART_DAY_OF_MONTH: 31,
         ElementPart.PART_MONTH: 11,
-        ElementPart.PART_DAY_OF_WEEK: 6
+        ElementPart.PART_DAY_OF_WEEK: 6,
     }
 
     def __init__(self, part):
@@ -81,10 +90,10 @@ class Element(object):
         :return:
         """
         maps = {
-            ElementPart.PART_MINUTE: 'minute',
-            ElementPart.PART_HOUR: 'hour',
-            ElementPart.PART_DAY_OF_MONTH: 'day',
-            ElementPart.PART_MONTH: 'month',
+            ElementPart.PART_MINUTE: "minute",
+            ElementPart.PART_HOUR: "hour",
+            ElementPart.PART_DAY_OF_MONTH: "day",
+            ElementPart.PART_MONTH: "month",
         }
         attribute = maps.get(self.part)
         if attribute:
@@ -101,7 +110,7 @@ class Element(object):
 
     @staticmethod
     def _convert_weekday(weekday):
-        """ converts the weekday from starting from a week starting from Monday to a week starting from Sunday
+        """converts the weekday from starting from a week starting from Monday to a week starting from Sunday
 
         For the official crontab documentation (https://man7.org/linux/man-pages/man5/crontab.5.html (2020-09-20)) it
         can be seen that their week starts on Sunday, which means SUN = 0, MON = 1, ..., SAT = 6. However, for the
@@ -125,8 +134,8 @@ class MatchAllElement(Element):
 
     def __init__(self, part, body):
         super().__init__(part)
-        if body != '*':
-            raise ValueError('MatchAllElement only allow *')
+        if body != "*":
+            raise ValueError("MatchAllElement only allow *")
 
     def match(self, dt):
         return True
@@ -150,7 +159,7 @@ class MatchListElement(Element):
 
     def __init__(self, part, body):
         super().__init__(part)
-        possible_values = body.split(',')
+        possible_values = body.split(",")
         self.values = set()
         for value in possible_values:
             self.values.add(int(value))
@@ -166,7 +175,7 @@ class MatchRangeElement(Element):
 
     def __init__(self, part, body):
         super().__init__(part)
-        ranges = body.split('-')
+        ranges = body.split("-")
         from_value = int(ranges[0])
         to_value = int(ranges[1])
         self.values = set()
@@ -190,8 +199,8 @@ class MatchStepElement(Element):
 
     def __init__(self, part, body):
         super().__init__(part)
-        step_parts = body.split('/')
-        if step_parts[0] == '*':
+        step_parts = body.split("/")
+        if step_parts[0] == "*":
             from_value = 0
         else:
             from_value = int(step_parts[0])
@@ -207,9 +216,9 @@ class MatchStepElement(Element):
 
 
 element_kind_map = {
-    'all': MatchAllElement,
-    'specific': MatchSpecificElement,
-    'range': MatchRangeElement,
-    'list': MatchListElement,
-    'step': MatchStepElement
+    "all": MatchAllElement,
+    "specific": MatchSpecificElement,
+    "range": MatchRangeElement,
+    "list": MatchListElement,
+    "step": MatchStepElement,
 }

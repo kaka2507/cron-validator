@@ -22,16 +22,18 @@ def test_time_for_execution_minutely():
     # Every minute a certain task should be performed
     cron_string = "*/1 * * * *"
     initial_datetime = datetime.datetime(year=2020, month=9, day=1, hour=13, minute=23, second=4)
-    ten_next_execution_times = [datetime.datetime(year=2020, month=9, day=1, hour=13, minute=23, second=4),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=24, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=25, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=26, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=27, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=28, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=29, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=30, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=31, second=0),
-                                datetime.datetime(year=2020, month=9, day=1, hour=13, minute=32, second=0)]
+    ten_next_execution_times = [
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=23, second=4),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=24, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=25, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=26, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=27, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=28, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=29, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=30, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=31, second=0),
+        datetime.datetime(year=2020, month=9, day=1, hour=13, minute=32, second=0),
+    ]
 
     n = 0
     with freeze_time(initial_datetime) as frozen_datetime:
@@ -50,16 +52,18 @@ def test_time_for_execution_complicated_cron():
     cron_string = "*/5 1-6 * 3 2-4"
 
     initial_datetime = datetime.datetime(year=2021, month=2, day=24, hour=9, minute=21, second=46)
-    ten_next_execution_times = [datetime.datetime(year=2021, month=3, day=2, hour=1, minute=0, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=5, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=10, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=15, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=20, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=25, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=30, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=35, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=40, second=0),
-                                datetime.datetime(year=2021, month=3, day=2, hour=1, minute=45, second=0)]
+    ten_next_execution_times = [
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=0, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=5, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=10, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=15, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=20, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=25, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=30, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=35, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=40, second=0),
+        datetime.datetime(year=2021, month=3, day=2, hour=1, minute=45, second=0),
+    ]
 
     n = 0
     with freeze_time(initial_datetime) as frozen_datetime:

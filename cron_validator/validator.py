@@ -1,6 +1,6 @@
 from dateutil import rrule
 
-from .regexes import ElementPart, regex_list, element_kind_map
+from .regexes import ElementPart, element_kind_map, regex_list
 from .util import ts_to_datetime
 
 
@@ -12,14 +12,14 @@ class CronValidator(object):
         :param str expression:
         :return:
         """
-        parts = expression.split(' ')
+        parts = expression.split(" ")
         if len(parts) != 5:
-            raise ValueError('Invalid expression')
+            raise ValueError("Invalid expression")
         elements = list()
         for i in range(0, 5):
             m = regex_list[i].fullmatch(parts[i])
             if not m:
-                raise ValueError('Invalid expression part {0}'.format(i))
+                raise ValueError("Invalid expression part {0}".format(i))
             kind = None
             body = None
             for key, value in m.groupdict().items():
