@@ -1,9 +1,9 @@
-from cron_validator import CronValidator
 from cron_validator.util import str_to_datetime
+from cron_validator.validator import CronValidator
 
 
 def test_match_minute():
-    dt_str = '2019-04-23 1:00'
+    dt_str = "2019-04-23 1:00"
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)
@@ -17,7 +17,7 @@ def test_match_minute():
 
 
 def test_match_hour():
-    dt_str = '2019-04-23 1:00'
+    dt_str = "2019-04-23 1:00"
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)
@@ -33,7 +33,7 @@ def test_match_hour():
 
 
 def test_match_day_of_month():
-    dt_str = '2019-04-23 1:00'
+    dt_str = "2019-04-23 1:00"
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)
@@ -50,7 +50,7 @@ def test_match_day_of_month():
 
 
 def test_match_month():
-    dt_str = '2019-04-23 1:00'
+    dt_str = "2019-04-23 1:00"
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)
@@ -66,7 +66,7 @@ def test_match_month():
 
 
 def test_match_day_of_week():
-    dt_str = '2019-04-23 1:00'  # Is a Tuesday
+    dt_str = "2019-04-23 1:00"  # Is a Tuesday
     dt = str_to_datetime(dt_str)
 
     assert CronValidator.match_datetime("* * * * *", dt)

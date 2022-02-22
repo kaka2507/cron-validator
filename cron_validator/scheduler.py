@@ -4,7 +4,6 @@ from cron_validator.validator import CronValidator
 
 
 class CronScheduler(CronValidator):
-
     def __init__(self, expression):
         super().__init__()
         self.gen = self.get_execution_time(expression, None, None)
@@ -22,6 +21,4 @@ class CronScheduler(CronValidator):
 
     @staticmethod
     def _round_down_to_nearest_minute(dt):
-        return dt - datetime.timedelta(minutes=dt.minute % 1,
-                                       seconds=dt.second,
-                                       microseconds=dt.microsecond)
+        return dt - datetime.timedelta(minutes=dt.minute % 1, seconds=dt.second, microseconds=dt.microsecond)

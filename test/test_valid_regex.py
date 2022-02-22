@@ -1,19 +1,20 @@
-from cron_validator import CronValidator
 import pytest
+
+from cron_validator.validator import CronValidator
 
 
 def assert_validate_successfully(expr):
     try:
         elements = CronValidator.parse(expr)
-        print("{0}: {1}".format(expr, elements))
+        print(f"{expr}: {elements}")
     except ValueError:
-        pytest.fail("Invalid expression: {0}".format(expr))
+        pytest.fail(f"Invalid expression: {expr}")
 
 
 def assert_validate_fail(expr):
     try:
         elements = CronValidator.parse(expr)
-        pytest.fail("Wrong validate {0}: {1}".format(expr, elements))
+        pytest.fail(f"Wrong validate {expr}: {elements}")
     except ValueError:
         pass
 

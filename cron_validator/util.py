@@ -1,6 +1,7 @@
 import datetime
-import pytz
+
 import dateutil.parser
+import pytz
 
 
 def get_tz(tz_name):
@@ -20,7 +21,7 @@ def ts_to_datetime(timestamp_s, tz_name):
     return datetime.datetime.fromtimestamp(timestamp_s, get_tz(tz_name))
 
 
-def str_to_datetime(datetime_str, tz_name='UTC'):
+def str_to_datetime(datetime_str, tz_name="UTC"):
     """
 
     :param datetime_str:
