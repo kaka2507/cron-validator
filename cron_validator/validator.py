@@ -1,12 +1,12 @@
 from dateutil import rrule
 
-from .regexes import ElementPart, element_kind_map, regex_list
+from .regexes import ElementPart, Version, element_kind_map, regex_dict
 from .util import ts_to_datetime
 
 
 class CronValidator:
     @classmethod
-    def parse(cls, expression):
+    def parse(cls, expression, version=Version.UNIX):
         """
 
         :param str expression:
@@ -17,7 +17,7 @@ class CronValidator:
             raise ValueError("Invalid expression")
         elements = []
         for i in range(0, 5):
-            m = regex_list[i].fullmatch(parts[i])
+            m = regex_dict[version][i].fullmatch(parts[i])
             if not m:
                 raise ValueError(f"Invalid expression part {i}")
             kind = None
@@ -48,28 +48,29 @@ class CronValidator:
         return True
 
     @classmethod
-    def match_datetime(cls, expression, dt):
+    def match_datetime(cls, expression, dt, version=Version.UNIX):
         """
 
         :param expression:
         :param dt:
         :return:
         """
-        elements = cls.parse(expression)
+        elements = cls.parse(expression, version)
         for element in elements:
             if not element.match(dt):
                 return False
         return True
 
     @classmethod
-    def get_execution_time(cls, expression, from_dt, to_dt):
+    def get_execution_time(cls, expression, from_dt, to_dt, version=Version.UNIX):
         """
 
         :param expression:
         :param from_dt:
         :param to_dt:
+        :param version:
         :return:
         """
         for dt in rrule.rrule(rrule.MINUTELY, dtstart=from_dt, until=to_dt):
-            if cls.match_datetime(expression, dt):
+            if cls.match_datetime(expression, dt, version):
                 yield dt.replace(second=0, microsecond=0)

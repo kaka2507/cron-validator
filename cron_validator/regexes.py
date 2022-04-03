@@ -1,4 +1,6 @@
 import re
+from datetime import timedelta
+from calendar import monthrange
 from enum import Enum
 
 minute_re = re.compile(
@@ -31,6 +33,17 @@ day_of_month_re = re.compile(
     )
 )
 
+day_of_month_re_eb = re.compile(
+    "{0}|{1}|{2}|{3}|{4}|{5}".format(
+        "(?P<all>\\*)",
+        "(?P<last>L)",
+        "(?P<specific>[1-2]?[1-9]|[1-3]0|31)",
+        "(?P<range>([1-2]?[1-9]|[1-3]0|31)-([1-2]?[1-9]|[1-3]0|31))",
+        "(?P<list>([1-2]?[1-9]|[1-3]0|31)(,([1-2]?[1-9]|[1-3]0|31))+)",
+        "(?P<step>(\\*|[1-2]?[1-9]|[1-3]0|31)/([1-2]?[1-9]|[1-3]0|31))",
+    )
+)
+
 month_re = re.compile(
     "{0}|{1}|{2}|{3}|{4}".format(
         "(?P<all>\\*)",
@@ -47,8 +60,23 @@ day_of_week_re = re.compile(
     )
 )
 
-regex_list = [minute_re, hour_re, day_of_month_re, month_re, day_of_week_re]
+day_of_week_re_eb = re.compile(
+    "{0}|{1}|{2}|{3}|{4}|{5}|{6}".format(
+        "(?P<all>\\*)", "(?P<specific>[0-6])", "(?P<range>[0-6]-[0-6])", "(?P<list>[0-6](,[0-6])+)", "(?P<step>(\\*|[0-6])/[1-6])", "(?P<last>[0-6]L)", "(?P<weekday>[1-2]?[1-9]W|[1-3]0W|31W)"
+    )
+)
 
+class Version(Enum):
+    UNIX = 'UNIX'
+    EB = 'EB'
+
+regex_list_unix = [minute_re, hour_re, day_of_month_re, month_re, day_of_week_re]
+regex_list_eb = [minute_re, hour_re, day_of_month_re_eb, month_re, day_of_week_re_eb]
+
+regex_dict = {
+    Version.UNIX: regex_list_unix,
+    Version.EB: regex_list_eb
+}
 
 class ElementPart(Enum):
     PART_MINUTE = 1
@@ -64,6 +92,8 @@ class ElementKind(Enum):
     GROUP_TYPE_RANGE = 3
     GROUP_TYPE_LIST = 4
     GROUP_TYPE_STEP = 5
+    GROUP_TYPE_LAST = 6
+    GROUP_TYPE_WEEKDAY = 7
 
 
 class Element:
@@ -214,6 +244,53 @@ class MatchStepElement(Element):
             return True
         return False
 
+class MatchLastElement(Element):
+    kind = ElementKind.GROUP_TYPE_LAST
+
+    def __init__(self, part, body):
+        self.body = body
+        super().__init__(part)
+
+    def match(self, dt):
+        if self.part == ElementPart.PART_DAY_OF_WEEK:
+            week_day = (dt.weekday() + 1) % 7
+            body_value = int(self.body[0])
+            return week_day == body_value and dt.day + 7 > monthrange(dt.year, dt.month)[1]
+        return monthrange(dt.year, dt.month)[1] == dt.day
+
+class MatchWeekDayElement(Element):
+    kind = ElementKind.GROUP_TYPE_WEEKDAY
+
+    def __init__(self, part, body):
+        self.body = body
+        super().__init__(part)
+
+    def calculate_closest_weekday(self, dt):
+        if dt.weekday() not in [5,6]:
+            return dt
+        next_day = dt
+        previous_day = dt
+        while next_day.weekday() in [5,6]:
+            next_day = next_day+timedelta(days=1)
+
+        while previous_day.weekday() in [5,6]:
+            previous_day = previous_day-timedelta(days=1)
+        
+        if next_day.month != dt.month:
+            return previous_day
+
+        if previous_day.month != dt.month:
+            return next_day
+
+        if next_day-dt < dt-previous_day:
+            return next_day
+
+        return previous_day
+
+    def match(self, dt):
+        day = int(self.body.replace("W", ""))
+        closest_weekday = self.calculate_closest_weekday(dt=dt.replace(day=day))
+        return closest_weekday == dt   
 
 element_kind_map = {
     "all": MatchAllElement,
@@ -221,4 +298,6 @@ element_kind_map = {
     "range": MatchRangeElement,
     "list": MatchListElement,
     "step": MatchStepElement,
+    "last": MatchLastElement,
+    "weekday": MatchWeekDayElement,
 }

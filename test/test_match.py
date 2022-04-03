@@ -1,5 +1,6 @@
 from cron_validator.util import str_to_datetime
 from cron_validator.validator import CronValidator
+from cron_validator.regexes import Version
 
 
 def test_match_minute():
@@ -79,3 +80,27 @@ def test_match_day_of_week():
     assert CronValidator.match_datetime("* * * * 1/1", dt)
     assert CronValidator.match_datetime("* * * * 3,4,5", dt) is False
     assert CronValidator.match_datetime("* * * * 2,3,1", dt)
+
+
+def test_match_eb_syntax():
+    dt_str = "2023-04-28 1:00"
+    dt = str_to_datetime(dt_str)
+    assert CronValidator.match_datetime("* * * * 30W", dt, version=Version.EB)
+    assert CronValidator.match_datetime("* * * * 5L", dt, version=Version.EB)
+
+    dt_str = "2022-02-28 1:00"
+    dt = str_to_datetime(dt_str)
+    assert CronValidator.match_datetime("* * L * *", dt, version=Version.EB)
+
+    dt_str = "2022-02-27 1:00"
+    dt = str_to_datetime(dt_str)
+    assert CronValidator.match_datetime("* * L * *", dt, version=Version.EB) is False
+
+    dt_str = "2020-02-28 1:00"
+    dt = str_to_datetime(dt_str)
+    assert CronValidator.match_datetime("* * L * *", dt, version=Version.EB) is False
+
+    dt_str = "2020-02-29 1:00"
+    dt = str_to_datetime(dt_str)
+    assert CronValidator.match_datetime("* * L * *", dt, version=Version.EB)
+
