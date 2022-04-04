@@ -96,6 +96,29 @@ while True:
         print("Now is the next scheduled time.")
 ```
 
+**5. Use extended cron rules based on AWS EventBridge rules**
+
+The cron validator supports partially extended rules based on the Amazon EvenBridge rule set. [More info.](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html#eb-cron-expressions)
+
+Currently we support:
+- 'L' for day of the month and day of the week
+- 'W' for day of the week.
+
+```python
+from cron_validator import CronValidator
+from cron_validator.util import str_to_datetime
+
+dt_str = '2023-04-28 1:00'
+dt = str_to_datetime(dt_str)
+
+assert CronValidator.match_datetime("* * * * 30W", dt, , version=Version.EB)
+assert CronValidator.match_datetime("* * * * 5L", dt, , version=Version.EB)
+
+dt_str = "2022-02-28 1:00"
+dt = str_to_datetime(dt_str)
+assert CronValidator.match_datetime("* * L * *", dt, version=Version.EB)
+```
+
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
