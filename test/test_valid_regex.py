@@ -107,3 +107,32 @@ def test_validator_day_of_week_part():
     assert_validate_successfully("* * * * */6")
     assert_validate_fail("* * * * */0")
     assert_validate_fail("* * * * */7")
+
+
+def test_validator_month_names():
+    assert_validate_successfully("* * * jan *")
+    assert_validate_successfully("* * * FEB,mar,Apr *")
+    assert_validate_successfully("* * * MAY-JUL *")
+    assert_validate_successfully("* * * jun-Aug *")
+    assert_validate_successfully("* * * Sep,Oct *")
+    assert_validate_successfully("* * * dec/3 *")
+    assert_validate_fail("* * * January *")
+    assert_validate_fail("* * * jan1 *")
+    assert_validate_fail("* * * 1jan *")
+    assert_validate_fail("* * * 2/feb *")
+    assert_validate_fail("* * * */feb *")
+    assert_validate_fail("* * * NOV/0 *")
+
+
+def test_validator_day_of_week_names():
+    assert_validate_successfully("* * * * sun")
+    assert_validate_successfully("* * * * mon,TUE,Wed")
+    assert_validate_successfully("* * * * FRI-SAT")
+    assert_validate_successfully("* * * * wed/2")
+    assert_validate_fail("* * * * Sunday")
+    assert_validate_fail("* * * * sun,mon-fri")
+    assert_validate_fail("* * * * tue/0")
+    assert_validate_fail("* * * * */mon")
+    assert_validate_fail("* * * * 1/wed")
+    assert_validate_fail("* * * * mon/mon")
+
