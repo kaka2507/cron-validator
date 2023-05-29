@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import dateutil.parser
 import pytz
@@ -29,3 +30,27 @@ def str_to_datetime(datetime_str, tz_name="UTC"):
     :return:
     """
     return dateutil.parser.parse(datetime_str).replace(tzinfo=get_tz(tz_name))
+
+
+def replace_names(expression):
+    """
+
+    :param expression:
+    :return:
+    """
+    parts = expression.split(" ")
+    month_names = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+    day_of_week_names = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+    month_names_re = re.compile(rf"(?<![\d\/])({'|'.join(month_names)})(?!\d)", re.IGNORECASE)
+    day_of_week_names_re = re.compile(rf"(?<![\d\/])({'|'.join(day_of_week_names)})(?!\d)", re.IGNORECASE)
+    parts[3] = re.sub(
+        month_names_re, 
+        lambda m: str(month_names.index(m.group().lower()) + 1), 
+        parts[3]
+    )
+    parts[4] = re.sub(
+        day_of_week_names_re, 
+        lambda m: str(day_of_week_names.index(m.group().lower())), 
+        parts[4]
+    )
+    return " ".join(parts)
