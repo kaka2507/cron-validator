@@ -1,6 +1,6 @@
 from dateutil import rrule
 
-from cron_validator.util import str_to_datetime
+from cron_validator.util import replace_names, str_to_datetime
 
 tz_name = "Asia/Ho_Chi_Minh"
 utc_tz = "UTC"
@@ -33,3 +33,12 @@ def test_iterator_day():
     assert delta.total_seconds() < 0
     for dt in rrule.rrule(rrule.MINUTELY, dtstart=dt1, until=dt2):
         print(dt)
+
+
+def test_replace_names():
+    assert replace_names("* * * */2,3 6") == "* * * */2,3 6"
+    assert replace_names("* * * may fri") == "* * * 5 5"
+    assert replace_names("* * * jan-sep,nov mon/2") == "* * * 1-9,11 1/2"
+    assert replace_names("* * * feb,aug,oct tue,WED,sAT") == "* * * 2,8,10 2,3,6"
+    assert replace_names("* * * MAR-apr thu-fri") == "* * * 3-4 4-5"
+    assert replace_names("* * * mAy,jun,JUL-DEC SUN/3") == "* * * 5,6,7-12 0/3"
