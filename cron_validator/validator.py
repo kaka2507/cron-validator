@@ -1,7 +1,7 @@
 from dateutil import rrule
 
 from .regexes import ElementPart, Version, element_kind_map, regex_dict
-from .util import ts_to_datetime
+from .util import replace_names, ts_to_datetime
 
 
 class CronValidator:
@@ -12,6 +12,7 @@ class CronValidator:
         :param str expression:
         :return:
         """
+        expression = replace_names(expression)
         parts = expression.split(" ")
         if len(parts) != 5:
             raise ValueError("Invalid expression")
