@@ -42,3 +42,5 @@ def test_replace_names():
     assert replace_names("* * * feb,aug,oct tue,WED,sAT") == "* * * 2,8,10 2,3,6"
     assert replace_names("* * * MAR-apr thu-fri") == "* * * 3-4 4-5"
     assert replace_names("* * * mAy,jun,JUL-DEC SUN/3") == "* * * 5,6,7-12 0/3"
+
+    assert replace_names("invalid_cron") == "invalid_cron"
